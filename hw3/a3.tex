@@ -157,7 +157,7 @@ Hint: It is sufficient to show that the error goes to zero in the infinity norm.
 \begin{mdframed}[style=MyFrame]
   Assume that if the error goes to zero in the infinity norm that the Jacobi iteration converges.
 
-Here's a quick explanation:
+Explanation:
 
 The infinity norm of a diagonal matrix is simply the largest element of the matrix, since each row only has one element.
 
@@ -168,6 +168,18 @@ The infinity norm of this new matrix is this inverse of the smallest item from t
 So in general, the max error is the largest element divided by the smallest element.
 
 If the difference between these is small, as is the case with an ill-conditioned matrix, then the error magnification will stay close to one.
+
+Note: Oops! I just noticed that I incorrectly tried to prove this for diagonal instead of diagonally-dominant. But this is due in a couple minutes, so here's a really quick attempt:
+
+Take 2 (for a diagonally dominant square matrix):
+
+Can we find a bound on our infinity norms for $A$ and $A^{-1}$?
+
+Well the infinity norm for $A$ is strictly less than 2*largest\_element\_in\_A from the definition of a ddsm.
+
+Via the properties of inverses for ddsm, we know that magnitude of the largest row will be at most, proportional to the invese of the infinit norm for $A$.
+
+So because of this inverse dependency, these two magnitudes will cancel - keeping the error from growing large.
 
 \end{mdframed}
 

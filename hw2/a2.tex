@@ -1,0 +1,264 @@
+\documentclass{article}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfdefinestyle{MyFrame}{%
+    innertopmargin=\baselineskip,
+    innerbottommargin=\baselineskip,
+    innerrightmargin=20pt,
+    innerleftmargin=20pt,
+    backgroundcolor=gray!10!white}
+
+\setlength{\parindent}{0pt} 
+\newcommand{\myspace}{0.4cm}
+\pagestyle{empty}
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\DeclareMathOperator\erf{erf}
+
+\begin{document}
+
+\large
+Ryan Phillips
+
+\begin{center}
+
+\large
+\begin{tabular}{L{0.3\linewidth} C{0.3\linewidth} R{0.3\linewidth}}
+\hline
+Assignment 2	&MTH 351 -- Section 010		&Winter 2014 \\
+\hline
+\end{tabular}
+
+\vspace{\myspace}
+
+{\bf Due Wednesday, April 16 by the end of class.}
+\end{center}
+
+\begin{enumerate}
+
+%%%QUESTION 1
+\item {\bf [5 points]} Consider the following system of equations:
+
+\begin{equation*}
+\begin{bmatrix}
+3		&-4\alpha \\
+3\alpha	&-1\\
+\end{bmatrix}  \begin{bmatrix}x_1 \\ x_2 \\ \end{bmatrix}= \begin{bmatrix}4 \\ 2 \\ \end{bmatrix},
+\end{equation*}
+where $\alpha$ is some real-valued parameter. For what value(s) of $\alpha$ does the system have:
+\begin{enumerate} 
+\item No solutions? \newline
+
+\begin{mdframed}[style=MyFrame]
+
+$\alpha = 1$ 
+
+This can be shown by plugging in this value and trying to solve the system.
+
+$3x_1 - 4x_2 = 4 \rightarrow A $ \newline
+$3x_1 - x_2 = 2 \rightarrow B$
+
+Then pick a fixed value for $x_1$ such as zero. And now we are left with 2 equations, $x_2 = -1$ and $x_2 = -2$. 
+
+\end{mdframed}
+
+\item Infinitely many solutions? \newline
+
+\begin{mdframed}[style=MyFrame]
+
+$\alpha = 1/2$ 
+
+$3x_1 - 2x_2 = 4 \rightarrow A$ \newline
+$\frac{3}{2} x_1 - x_2 = 2 \rightarrow B$
+
+If you multiply B by 2 you will notice that we do not have 2 independent expressions, therefore we have infinitely many solutions.
+
+\end{mdframed}
+
+\item A unique solution? \newline
+
+\begin{mdframed}[style=MyFrame]
+
+$\alpha = 0$ 
+
+$-x_2 = 2$
+
+$3x_1 = 4$
+
+Solving these two expressions yields a unique solution: $x_2 = -2$ and $x_1 = 4/3$. 
+
+\end{mdframed}
+
+\end{enumerate}
+
+\item {\bf[8 points]} Consider the system $Ax = b$, with 
+\begin{align*}
+A &= \begin{bmatrix}
+ ~2     &2     &2 \\
+    -1     &0     &1 \\
+     ~3     &5     &6 \\
+\end{bmatrix},
+&b &= \begin{bmatrix}-1 \\~3\\~0 \end{bmatrix}
+\end{align*}
+\begin{enumerate}
+\item Compute the $LU$ factorization of $A$ by hand, and use it to solve the system as shown in class. \newline
+
+\begin{mdframed}[style=MyFrame]
+
+LU factorization steps:
+
+$R2 + \frac{1}{2} R1 \rightarrow R2 $ \newline
+$R3 - \frac{3}{2} R1 \rightarrow R3 $ \newline
+$R3 - R2 \rightarrow R3 $ \newline
+
+\begin{align*}
+L &= \begin{bmatrix}
+ ~1     &0     &0 \\
+    -1/2     &1     &0 \\
+     3/2     &-1     &1 \\
+\end{bmatrix},
+&U &= \begin{bmatrix}
+ ~2     &2     &2 \\
+    0     &1     &2 \\
+     ~0     &0     &1 \\
+\end{bmatrix}
+\end{align*}
+
+Solving row by row:
+
+$r1 \rightarrow 1x_1 = -1$
+
+$x_1 = -1$
+
+$r2 \rightarrow \frac{-1}{2}x_1 + x_2 = 3$
+
+$x_2 = \frac{5}{2}$
+
+$r3 \rightarrow \frac{3}{2}x_1 + -1x_2 + x_3 = 0$
+
+$x_3 = 4$
+
+\end{mdframed}
+
+\item Compute the determinant of $A$ using the usual method (see \href{http://en.wikipedia.org/wiki/Determinant#3.C2.A0.C3.97.C2.A03_matrices}{here} if you do not recall how to do this).
+
+\begin{mdframed}[style=MyFrame]
+
+$2*(0-5)-2*(-6-3)+2*(-5-0) = -10+18-10 = -2 $
+
+\end{mdframed}
+
+\item Explain how the determinant of any $n \times n$ matrix $A$ can be easily computed from the $LU$ factorization of $A$, using only $n-1$ multiplications. Use your results from parts (a) and (b) to verify that this works for the matrix $A$ of this problem. \newline
+
+Hint: you may use the following result from linear algebra: $\det(AB)$ = $\det(A) \cdot \det(B)$. \newline
+
+\begin{mdframed}[style=MyFrame]
+
+By my count this takes even less than n - 1 multiplications:
+
+We find the the determinant of $L^-1$ and the determinant of $U$, and multiply these results to the get determinant of A. Even though we are finding two determinants, this requires few steps because of all the zeroes in the matrices. For $L^-1$ we only need to find the determinant of one sub-determinant, because we know the other two will be multiplied by zero. Using this same sort of logic, we see that we only need to perform two multiplications for each, and then one additional one from the identity stated in the problem description.
+
+\end{mdframed}
+
+\end{enumerate}
+
+\item {\bf [7 points]} For certain special types of matrix, the $LU$ factorization has a simpler form, which can be computed more efficiently. A {\em positive definite} matrix is a symmetric, $n\times n$ matrix $A$ such that the product $x^TAx$ is positive for any non-zero vector $x \in \mathbb{R}^n$. It can be shown that the matrix
+\begin{equation*}
+A = \begin{bmatrix}
+     ~1    &-2     &~1 \\
+    -2     &~8     &~6 \\
+     ~1     &~6    &19 \\
+\end{bmatrix}
+\end{equation*}
+is positive definite.
+\begin{enumerate}
+\item Compute the $LU$ factorization of $A$ by hand. \newline
+
+\begin{mdframed}[style=MyFrame]
+
+LU factorization steps:
+
+$R2 + 2R1 \rightarrow R2 $ \newline
+$R3 - R1 \rightarrow R3 $ \newline
+$R3 - 2R2 \rightarrow R3 $ \newline
+
+\begin{align*}
+L &= \begin{bmatrix}
+ ~1     &0     &0 \\
+    -2     &1     &0 \\
+     1     &2     &1 \\
+\end{bmatrix},
+&U &= \begin{bmatrix}
+ ~1     &-2     &1 \\
+    0     &4     &8 \\
+     ~0     &0     &2 \\
+\end{bmatrix}
+\end{align*}
+
+\end{mdframed}
+
+\item You may notice that every {\bf row} of $U$ is a scalar multiple of the corresponding {\bf column} in $L$. Thus, show that you can write the $LU$ factorization of $A$ as
+\begin{equation*}
+A = L D L^T,
+\end{equation*}
+where $L$ is lower triangular and $D$ is a diagonal matrix. This can be done for any symmetric matrix (even if it is not positive definite). \newline
+
+\begin{mdframed}[style=MyFrame]
+
+Yes this is true because $DL^T = U$
+
+\begin{equation*}
+\begin{bmatrix}
+ ~1     &0     &0 \\
+    ~0     &4     &0 \\
+     ~0     &0     &2 \\
+\end{bmatrix}
+\begin{bmatrix}
+ ~1     &-2     &1 \\
+    ~0     &1    &2 \\
+     ~0     &0     &1 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+ ~1     &-2     &1 \\
+    ~0     &4     &8 \\
+     ~0     &0     &2 \\
+\end{bmatrix}
+\end{equation*}
+
+\end{mdframed}
+
+\item As a consequence of the matrix being positive definite, all the elements in $D$ should be positive. Show that you can therefore write the $LU$ factorization of $A$ as
+\begin{equation*}
+A = LL^T
+\end{equation*}
+where $L$ is a lower triangular matrix (it is not exactly the same lower triangular matrix as you get from the $LU$ factorization). This is known as the Cholesky factorization, and it can be computed for any positive definite matrix.
+\end{enumerate}
+
+\begin{mdframed}[style=MyFrame]
+
+Yes, here's the Cholesky factorization of A:
+
+\begin{equation*}
+\begin{bmatrix}
+ ~1     &-2     &1 \\
+    ~0     &2     &4 \\
+     ~0     &0     &\sqrt[]{2} \\
+\end{bmatrix}
+\end{equation*}
+
+I'm not entirely sure how to computer it, but it looks like it's basically just an average (value by value) of $U$ and $L^T$ from above.
+
+\end{mdframed}
+
+\end{enumerate}
+\end{document}
+

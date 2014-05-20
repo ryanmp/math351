@@ -11,13 +11,14 @@
 %   x -- the root found by Newton's method
 %   xs -- the sequence of all x values that were found
 
-function [x, xarray] = newtons(x0, tol, N)
+% modified for hw5.1c (by Ryan Phillips)
 
-    format long
+
+function [x, xarray] = newtons(x0, tol, N)
 
     switch(nargin)
         case 1
-            N = 20; tol = 1e-10;     %use default values if the user doesn't specify any
+            N = 30; tol = 1e-25;     %use default values if the user doesn't specify any
         case 2
             N = inf;                %user wants to guarantee a specified tolerance
         otherwise
@@ -27,14 +28,20 @@ function [x, xarray] = newtons(x0, tol, N)
     % Enter your function and its derivative (fp) here!
     % These define anonymous functions -- type 'help function_handle' for
     % more info
+ 
+    format long;
     
-    %Example 1
-    f =  @(x) x^2 - 12;
-    fp = @(x) 2*x;
-
+    f = @(x) x^2 - 2*x*exp(-x) + exp(-2*x);
+    fp = @(x) 2*exp(-2*x) * (exp(x)+1) * (exp(x)*x - 1);
+    fpp = @(x) 2*exp(-2*x) * (-exp(x)*(x-2)+exp(2*x) + 2 );
+     
     its = 0;                %number of iterations run so far
     
-    fx = f(x0); fpx = fp(x0); %compute the first values of f and fp
+    %compute the first values
+    fx = f(x0);
+    fpx = fp(x0); 
+    fppx = fpp(x0);
+    
     x = x0; x_old = inf;    %we set x_old to inf initially so that the while loop will run.
     xarray = [x];             %store the iteration history so that we can examine convergence
     qratio = 0; lratio = 0;
@@ -48,8 +55,14 @@ function [x, xarray] = newtons(x0, tol, N)
             fprintf('   %d\t%1.8e\t%1.8e\n',its,x,fx);
         end
         x_old = x;
-        x = x - fx/fpx;             %update x
-        fx = f(x); fpx = fp(x);     %update f and fp
+ 
+        x = x - (fx*fpx)/((fpx^2) - (fx*fppx));
+        
+        %update
+        fx = f(x);
+        fpx = fp(x);   
+        fppx = fpp(x);
+        
         xarray = [xarray x];
          
         % In case we found the root exactly

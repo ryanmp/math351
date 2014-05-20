@@ -10,6 +10,8 @@
 
 function c = bisect(a, b, tol, N)
 
+    format long
+
     switch(nargin)
         case 2
             N = 50; tol = 1e-6;     %use default values if the user doesn't specify any
@@ -22,7 +24,8 @@ function c = bisect(a, b, tol, N)
     % ENTER THE APPROPRIATE FUNCTION HERE
     % This defines an anonymous function -- type 'help function_handle' for
     % more info
-    f = @(x) x^3 + x^2 - 5*x - 5;
+    %f = @(x) x^3 + x^2 - 5*x - 5;
+    f = @(x) x^3 - 20;
     
     fa = f(a); fb = f(b);
     

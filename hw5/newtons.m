@@ -13,11 +13,9 @@
 
 function [x, xarray] = newtons(x0, tol, N)
 
-    format long
-
     switch(nargin)
         case 1
-            N = 20; tol = 1e-10;     %use default values if the user doesn't specify any
+            N = 20; tol = 1e-6;     %use default values if the user doesn't specify any
         case 2
             N = inf;                %user wants to guarantee a specified tolerance
         otherwise
@@ -29,9 +27,14 @@ function [x, xarray] = newtons(x0, tol, N)
     % more info
     
     %Example 1
-    f =  @(x) x^2 - 12;
-    fp = @(x) 2*x;
-
+    %f =  @(x) x^3 + x^2 - 5*x - 5;
+    %fp = @(x) 3*x^2 + 2*x - 5;
+    
+    f = @(x) x^2 - 2*x*exp(-x) + exp(-2*x);
+    fp = @(x) 2*exp(-2*x) * (exp(x)+1) * (exp(x)*x - 1);
+     
+  
+    
     its = 0;                %number of iterations run so far
     
     fx = f(x0); fpx = fp(x0); %compute the first values of f and fp

@@ -7,5 +7,5 @@ function I = comp_trap(x,y)
     h = x(2)-x(1);      %assume equal spacing
     I = y(1) + 2*sum(y(2:end-1)) + y(end);
     I = h/2*I;
-
+    
 end
